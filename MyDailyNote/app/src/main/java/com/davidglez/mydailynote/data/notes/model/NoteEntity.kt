@@ -1,9 +1,9 @@
-package com.davidglez.mydailynote.data.notes
+package com.davidglez.mydailynote.data.notes.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.davidglez.mydailynote.data.notes.utils.Constants.NOTE_TABLE_NAME
+import com.davidglez.mydailynote.data.notes.model.utils.Constants.NOTE_TABLE_NAME
 
 /**
  * Created by davidgonzalez on 31/03/23

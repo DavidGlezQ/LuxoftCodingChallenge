@@ -1,6 +1,8 @@
 package com.davidglez.mydailynote.domain.notes
 
 import com.davidglez.mydailynote.data.notes.NotesRepository
+import com.davidglez.mydailynote.domain.notes.model.Note
+import com.davidglez.mydailynote.domain.notes.model.toNoteEntity
 import javax.inject.Inject
 
 /**

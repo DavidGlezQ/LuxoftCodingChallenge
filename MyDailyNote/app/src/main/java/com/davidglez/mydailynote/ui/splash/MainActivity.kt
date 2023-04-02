@@ -1,4 +1,4 @@
-package com.davidglez.mydailynote
+package com.davidglez.mydailynote.ui.splash
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

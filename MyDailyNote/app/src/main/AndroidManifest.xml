@@ -13,12 +13,7 @@
         android:theme="@style/Theme.MyDailyNote"
         tools:targetApi="31" >
         <activity
-            android:name=".NoteListActivity"
-            android:exported="false"
-            android:label="@string/title_activity_note_list"
-            android:theme="@style/Theme.MyDailyNote" />
-        <activity
-            android:name=".ui.splash.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.MyDailyNote" >

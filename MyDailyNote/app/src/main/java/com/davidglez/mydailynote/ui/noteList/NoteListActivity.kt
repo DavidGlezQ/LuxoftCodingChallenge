@@ -5,13 +5,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.davidglez.mydailynote.ui.MainDestination
 import com.davidglez.mydailynote.ui.theme.MyDailyNoteTheme
 
 
@@ -19,14 +17,13 @@ import com.davidglez.mydailynote.ui.theme.MyDailyNoteTheme
  * Created by davidgonzalez on 01/04/23
  */
 
-
-
 @Composable
-fun NoteList() {
+fun NoteList(onNavigate: (MainDestination) -> Unit) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         floatingActionButton = {
-            ExtendedFloatingActionButton(text = { Text(text = "New Note")}, onClick = {}, icon = {
+            ExtendedFloatingActionButton(text = { Text(text = "New Note")},
+                onClick = { onNavigate(MainDestination.CreateEditNote)}, icon = {
                 Icon(
                     Icons.Filled.Add,
                     contentDescription = "Add"
@@ -44,6 +41,6 @@ fun NoteList() {
 @Composable
 fun PreviewScreen() {
     MyDailyNoteTheme {
-        NoteList()
+        NoteList(onNavigate = {})
     }
 }

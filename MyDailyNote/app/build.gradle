@@ -60,7 +60,10 @@ dependencies {
     kapt 'com.google.dagger:hilt-compiler:2.45'
 
     //Lottie
-    implementation 'com.airbnb.android:lottie:6.0.0'
+    implementation 'com.airbnb.android:lottie-compose:6.0.0'
+
+    //ConstraintLayout
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
 
     //Default Dependencies
     implementation 'androidx.core:core-ktx:1.9.0'

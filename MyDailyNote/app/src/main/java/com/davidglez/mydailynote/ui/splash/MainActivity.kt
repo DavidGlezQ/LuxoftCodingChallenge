@@ -32,9 +32,9 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
 }
 
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun LottieAnimationView() {
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.my_daily_note_splash_animation))

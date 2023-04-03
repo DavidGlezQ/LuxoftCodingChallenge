@@ -9,7 +9,7 @@ import javax.inject.Inject
  * Created by davidgonzalez on 31/03/23
  */
 class GetNotes @Inject constructor(private val notesRepository: NotesRepository){
-    suspend operator fun invoke(): List<Note> {
+    operator fun invoke(): List<Note> {
         return notesRepository.getAllNotes().map { it.toNote() }
     }
 }

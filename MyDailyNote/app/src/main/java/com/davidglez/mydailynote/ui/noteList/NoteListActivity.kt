@@ -18,7 +18,7 @@ import com.davidglez.mydailynote.ui.theme.MyDailyNoteTheme
  */
 
 @Composable
-fun NoteList(onNavigate: (MainDestination) -> Unit) {
+fun NoteList(onNavigate: (MainDestination) -> Unit, noteListInteractor: NoteListInteractor) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         floatingActionButton = {
@@ -31,7 +31,10 @@ fun NoteList(onNavigate: (MainDestination) -> Unit) {
             })
         }
     ) {
-        com.davidglez.mydailynote.ui.components.NoteList(modifier = Modifier.padding(it), notes = Constants.notes, onSelectedNote = {})
+        com.davidglez.mydailynote.ui.components.NoteList(
+            modifier = Modifier.padding(it),
+            notes = noteListInteractor.notes,
+            onSelectedNote = {})
     }
 }
 
@@ -39,6 +42,6 @@ fun NoteList(onNavigate: (MainDestination) -> Unit) {
 @Composable
 fun PreviewScreen() {
     MyDailyNoteTheme {
-        NoteList(onNavigate = {})
+        NoteList(onNavigate = {}, noteListInteractor = NoteListInteractor())
     }
 }

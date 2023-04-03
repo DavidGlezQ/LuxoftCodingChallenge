@@ -32,21 +32,24 @@ import com.davidglez.mydailynote.ui.noteList.NoteListInteractor
 import com.davidglez.mydailynote.ui.theme.MyDailyNoteTheme
 import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MyDailyNoteTheme {
-                //val noteViewModel: NoteListActivityViewModel = hiltViewModel()
+                val noteViewModel: NoteListActivityViewModel = hiltViewModel()
                 val navController = rememberNavController()
                 NavHost(navController = navController, startDestination = MainDestination.NoteList.route) {
                     composable(MainDestination.NoteList.route) {
                         NoteList(onNavigate = { screen ->
                             navigate(navHostController = navController, screenDestination = screen)
-                        })
+                        }, noteListInteractor = noteViewModel.state.value)
                     }
                     composable(MainDestination.CreateEditNote.route) {
-                        CreateEditNote(noteState = NoteListInteractor())
+                        CreateEditNote(onEvent = { event ->
+                            noteViewModel.onEvent(noteEvent = event )
+                        })
                     }
                 }
                 /*Surface(

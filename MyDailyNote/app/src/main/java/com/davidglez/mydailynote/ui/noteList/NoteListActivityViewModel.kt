@@ -9,6 +9,8 @@ import com.davidglez.mydailynote.domain.notes.DeleteNote
 import com.davidglez.mydailynote.domain.notes.GetNotes
 import com.davidglez.mydailynote.domain.notes.InsertNote
 import com.davidglez.mydailynote.domain.notes.UpdateNote
+import com.davidglez.mydailynote.domain.notes.model.Note
+import com.davidglez.mydailynote.ui.main.NoteEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,7 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class NoteListActivityViewModel @Inject constructor(
     private val getNotes: GetNotes,
-    private val insertNote: InsertNote,
+    private val addNote: InsertNote,
     private val updateNote: UpdateNote,
     private val deleteNote: DeleteNote) : ViewModel() {
 
@@ -32,13 +34,26 @@ class NoteListActivityViewModel @Inject constructor(
         collectNotes()
     }
 
+    fun onEvent(noteEvent: NoteEvent) {
+        when(noteEvent) {
+            is NoteEvent.AddNote -> {
+                insertNote(note = noteEvent.note)
+            }
+        }
+    }
+
     private fun collectNotes() {
-        viewModelScope.launch {
-            Dispatchers.IO
+        viewModelScope.launch(Dispatchers.IO) {
             val fetchedNotes = getNotes()
             withContext(Dispatchers.Main) {
                 _state.value = _state.value.copy(notes = fetchedNotes)
             }
+        }
+    }
+
+    private fun insertNote(note: Note) {
+        viewModelScope.launch(Dispatchers.IO) {
+            addNote(note)
         }
     }
 }

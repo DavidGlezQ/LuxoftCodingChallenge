@@ -25,7 +25,9 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.davidglez.mydailynote.ui.components.TfCustom
 import com.davidglez.mydailynote.ui.theme.MyDailyNoteTheme
 import com.davidglez.mydailynote.R
+import com.davidglez.mydailynote.domain.notes.model.Note
 import com.davidglez.mydailynote.ui.components.CounterMaxLength
+import com.davidglez.mydailynote.ui.main.NoteEvent
 import com.davidglez.mydailynote.ui.noteList.NoteListInteractor
 
 
@@ -34,7 +36,7 @@ import com.davidglez.mydailynote.ui.noteList.NoteListInteractor
  */
 
 @Composable
-fun CreateEditNote(noteState: NoteListInteractor) {
+fun CreateEditNote(onEvent: (NoteEvent) -> Unit) {
     ConstraintLayout {
         val topGuideline = createGuidelineFromTop(16.dp)
 
@@ -83,9 +85,14 @@ fun CreateEditNote(noteState: NoteListInteractor) {
             maxLengthRes = R.integer.notes_max_length)
 
         //Button
-        Button(onClick = { saveNote() }, modifier = Modifier
-            .constrainAs(btnSaveNote) {
-                bottom.linkTo(parent.bottom)
+        Button(
+            onClick = {
+                onEvent(NoteEvent.AddNote(note = Note(
+                    id = 0,
+                    title = noteNameValue,
+                    description = notesValue))) },
+            modifier = Modifier.constrainAs(btnSaveNote) {
+                top.linkTo(textFieldNoteDescription.bottom)
             }
             .padding(all = 16.dp)) {
             Text(text = "Save Note")
@@ -97,14 +104,10 @@ fun CreateEditNote(noteState: NoteListInteractor) {
     }
 }
 
-fun saveNote() {
-    //Toast.makeText(this, "Note Saved", Toast.LENGTH_LONG).show()
-}
-
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewScreen() {
     MyDailyNoteTheme {
-        CreateEditNote(noteState = NoteListInteractor())
+        CreateEditNote(onEvent = {})
     }
 }

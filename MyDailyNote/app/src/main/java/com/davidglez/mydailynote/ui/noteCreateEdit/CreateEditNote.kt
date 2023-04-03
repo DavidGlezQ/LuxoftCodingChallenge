@@ -26,6 +26,7 @@ import com.davidglez.mydailynote.ui.components.TfCustom
 import com.davidglez.mydailynote.ui.theme.MyDailyNoteTheme
 import com.davidglez.mydailynote.R
 import com.davidglez.mydailynote.domain.notes.model.Note
+import com.davidglez.mydailynote.ui.MainDestination
 import com.davidglez.mydailynote.ui.components.CounterMaxLength
 import com.davidglez.mydailynote.ui.main.NoteEvent
 import com.davidglez.mydailynote.ui.noteList.NoteListInteractor
@@ -36,7 +37,10 @@ import com.davidglez.mydailynote.ui.noteList.NoteListInteractor
  */
 
 @Composable
-fun CreateEditNote(onEvent: (NoteEvent) -> Unit) {
+fun CreateEditNote(onEvent: (NoteEvent) -> Unit,
+                   noteListInteractor: NoteListInteractor,
+                   onNavigate: (MainDestination) -> Unit) {
+
     ConstraintLayout {
         val topGuideline = createGuidelineFromTop(16.dp)
 
@@ -45,6 +49,12 @@ fun CreateEditNote(onEvent: (NoteEvent) -> Unit) {
 
         var noteNameValue by remember { mutableStateOf("") }
         var notesValue by remember { mutableStateOf("") }
+
+        //Validadion para saber si va a la lista de notas y devolver la bandera a su estado
+        if (noteListInteractor.navToHome) {
+            onNavigate(MainDestination.NoteList)
+            onEvent(NoteEvent.NotNavToHome)
+        }
 
         //TextField Note Name
         TfCustom(paddingTop = dimensionResource(id = R.dimen.common_padding_nano),
@@ -108,6 +118,8 @@ fun CreateEditNote(onEvent: (NoteEvent) -> Unit) {
 @Composable
 fun PreviewScreen() {
     MyDailyNoteTheme {
-        CreateEditNote(onEvent = {})
+        CreateEditNote(onEvent = {},
+            noteListInteractor = NoteListInteractor(),
+            onNavigate = {})
     }
 }

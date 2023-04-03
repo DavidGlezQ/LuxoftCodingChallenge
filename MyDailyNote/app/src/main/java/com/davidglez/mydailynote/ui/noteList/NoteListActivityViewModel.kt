@@ -39,6 +39,12 @@ class NoteListActivityViewModel @Inject constructor(
             is NoteEvent.AddNote -> {
                 insertNote(note = noteEvent.note)
             }
+            NoteEvent.NavToHome -> {
+                setNavToHome()
+            }
+            NoteEvent.NotNavToHome -> {
+                unSetNavToHome()
+            }
         }
     }
 
@@ -54,6 +60,16 @@ class NoteListActivityViewModel @Inject constructor(
     private fun insertNote(note: Note) {
         viewModelScope.launch(Dispatchers.IO) {
             addNote(note)
+            collectNotes()
+            setNavToHome()
         }
+    }
+
+    private fun setNavToHome() { //Navegar a la lista de notas cuando se inserta una nota
+        _state.value = _state.value.copy(navToHome = true)
+    }
+
+    private fun unSetNavToHome() { //Update NotesList
+        _state.value = _state.value.copy(navToHome = false)
     }
 }

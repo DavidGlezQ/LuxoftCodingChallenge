@@ -49,6 +49,8 @@ class MainActivity : ComponentActivity() {
                     composable(MainDestination.CreateEditNote.route) {
                         CreateEditNote(onEvent = { event ->
                             noteViewModel.onEvent(noteEvent = event )
+                        }, noteListInteractor = noteViewModel.state.value, onNavigate = {
+                            navigate(navHostController = navController, screenDestination = it)
                         })
                     }
                 }

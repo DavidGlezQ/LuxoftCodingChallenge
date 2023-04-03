@@ -10,7 +10,7 @@ import com.davidglez.mydailynote.data.notes.model.utils.Constants.NOTE_TABLE_NAM
  */
 @Entity(tableName = NOTE_TABLE_NAME)
 data class NoteEntity(
-    @PrimaryKey val uid: Int,
+    @PrimaryKey(autoGenerate = true) val uid: Int,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "description") val description: String
 )

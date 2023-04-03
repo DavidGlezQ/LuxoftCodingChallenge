@@ -1,6 +1,5 @@
 package com.davidglez.mydailynote.ui.noteList
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -9,6 +8,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.davidglez.mydailynote.data.notes.model.utils.Constants
 import com.davidglez.mydailynote.ui.MainDestination
 import com.davidglez.mydailynote.ui.theme.MyDailyNoteTheme
 
@@ -31,9 +31,7 @@ fun NoteList(onNavigate: (MainDestination) -> Unit) {
             })
         }
     ) {
-        Column(modifier = Modifier.padding(it)) {
-
-        }
+        com.davidglez.mydailynote.ui.components.NoteList(modifier = Modifier.padding(it), notes = Constants.notes, onSelectedNote = {})
     }
 }
 

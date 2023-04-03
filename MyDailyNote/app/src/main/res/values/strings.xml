@@ -2,5 +2,13 @@
     <string name="app_name">MyDailyNote</string>
     <string name="title_activity_note_list">NoteListActivity</string>
     <string name = "help_required">Required</string>
+    <string name="fab_add_text">Add Note</string>
+    <string name="add_common_content_description">Add</string>
+    <string name="hint_textField_note_name">Note Name</string>
+    <string name="hint_textField_note_description">Note Description</string>
+    <string name="btn_updateNote_text">Update Note</string>
+    <string name="btn_deleteNote_text">Delete Note</string>
+    <string name="btn_createNote_text">Create Note</string>
+
 
 </resources>

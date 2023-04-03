@@ -5,14 +5,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.integerResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -52,10 +50,9 @@ fun CreateEditNote(onEvent: (NoteEvent) -> Unit,
             onNavigate(MainDestination.NoteList)
             onEvent(NoteEvent.NotNavToHome)
         }
-
         //TextField Note Name
         TfCustom(paddingTop = dimensionResource(id = R.dimen.common_padding_nano),
-            labelRes = R.string.app_name,
+            labelRes = R.string.hint_textField_note_name,
             iconRes = R.drawable.ic_note_name,
             maxLength = integerResource(id = R.integer.name_max_length),
             isRequired = true,
@@ -69,7 +66,7 @@ fun CreateEditNote(onEvent: (NoteEvent) -> Unit,
 
         //TextField Note Description
         TfCustom(
-            labelRes = R.string.app_name,
+            labelRes = R.string.hint_textField_note_description,
             iconRes = R.drawable.ic_note_description,
             isSingleLine = false,
             maxLength = integerResource(id = R.integer.notes_max_length),
@@ -98,14 +95,15 @@ fun CreateEditNote(onEvent: (NoteEvent) -> Unit,
                     id = 0,
                     title = noteNameValue,
                     description = notesValue))) },
-            modifier = Modifier.constrainAs(btnSaveNote) {
-                top.linkTo(textFieldNoteDescription.bottom)
-            }
-            .padding(all = 16.dp)) {
-            Text(text = "Save Note")
+            modifier = Modifier
+                .constrainAs(btnSaveNote) {
+                    top.linkTo(textFieldNoteDescription.bottom)
+                }
+                .padding(all = 16.dp)) {
+            Text(text = stringResource(id = R.string.btn_createNote_text))
             Icon(
                 Icons.Filled.Done,
-                contentDescription = "Note Save",
+                contentDescription = stringResource(id = R.string.btn_createNote_text),
                 modifier = Modifier.size(ButtonDefaults.IconSize))
         }
     }

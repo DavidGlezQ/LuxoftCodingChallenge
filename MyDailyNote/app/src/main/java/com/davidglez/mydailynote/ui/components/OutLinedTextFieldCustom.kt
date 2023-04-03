@@ -26,6 +26,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material3.ContentAlpha
 import com.davidglez.mydailynote.R
 import java.util.*
@@ -39,6 +40,7 @@ import java.util.*
 fun showTextField() {
     TfCustom(labelRes = R.string.app_name, iconRes = R.drawable.ic_note_name) { "" }
 }
+
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TfCustom(modifier: Modifier = Modifier,
@@ -85,10 +87,12 @@ fun TfCustom(modifier: Modifier = Modifier,
                 .fillMaxWidth()
                 .padding(top = paddingTop)
                 //Validacion para que al momento de dar click fuera de la caja de texto no se lance el evento
-                .clickable { if (isLikedButton) datePickerTextField(context) {
-                    textValue = it
-                    onValueChanged(textValue)
-                } },
+                .clickable {
+                    if (isLikedButton) datePickerTextField(context) {
+                        textValue = it
+                        onValueChanged(textValue)
+                    }
+                },
             label = { Text(text = stringResource(id = labelRes)) },
             keyboardOptions = KeyboardOptions(
                 keyboardType = keyBoardOption?.keyboardType ?: KeyboardType.Text,

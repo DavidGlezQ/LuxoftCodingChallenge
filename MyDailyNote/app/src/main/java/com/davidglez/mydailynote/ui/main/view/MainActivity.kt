@@ -9,7 +9,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.davidglez.mydailynote.domain.notes.model.Note
 import com.davidglez.mydailynote.ui.MainDestination
 import com.davidglez.mydailynote.ui.main.NoteEvent
 import com.davidglez.mydailynote.ui.main.viewModel.NoteListActivityViewModel

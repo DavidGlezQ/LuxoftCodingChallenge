@@ -7,11 +7,13 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.davidglez.mydailynote.domain.notes.model.Note
 import com.davidglez.mydailynote.ui.MainDestination
 import com.davidglez.mydailynote.ui.main.interactor.NoteListInteractor
 import com.davidglez.mydailynote.ui.theme.MyDailyNoteTheme
+import com.davidglez.mydailynote.R
 
 /**
  * Created by davidgonzalez on 01/04/23
@@ -22,11 +24,11 @@ fun NoteList(onNavigate: (MainDestination) -> Unit, noteListInteractor: NoteList
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         floatingActionButton = {
-            ExtendedFloatingActionButton(text = { Text(text = "New Note")},
+            ExtendedFloatingActionButton(text = { Text(text = stringResource(id = R.string.fab_add_text))},
                 onClick = { onNavigate(MainDestination.CreateEditNote)}, icon = {
                 Icon(
                     Icons.Filled.Add,
-                    contentDescription = "Add"
+                    contentDescription = stringResource(id = R.string.add_common_content_description)
                 )
             })
         }

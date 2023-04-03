@@ -9,6 +9,7 @@ object Constants {
     const val NOTE_TABLE_NAME = "notesDB"
     const val NOTE_DATABASE = "note_DB"
 
+    val example_note = Note(id = 0, title = "Title Test", description = "Description Test")
     val notes = listOf(
         Note(id = 0, title = "Title Test", description = "Description Test"),
         Note(id = 0, title = "Title Test", description = "Description Test"),

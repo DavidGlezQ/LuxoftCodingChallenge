@@ -1,34 +1,18 @@
-package com.davidglez.mydailynote.ui.main
+package com.davidglez.mydailynote.ui.main.view
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.airbnb.lottie.LottieAnimationView
-import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.animateLottieCompositionAsState
-import com.airbnb.lottie.compose.rememberLottieComposition
-import com.davidglez.mydailynote.R
+import com.davidglez.mydailynote.domain.notes.model.Note
 import com.davidglez.mydailynote.ui.MainDestination
-import com.davidglez.mydailynote.ui.noteCreateEdit.CreateEditNote
-import com.davidglez.mydailynote.ui.noteList.NoteList
-import com.davidglez.mydailynote.ui.noteList.NoteListActivityViewModel
-import com.davidglez.mydailynote.ui.noteList.NoteListInteractor
+import com.davidglez.mydailynote.ui.main.NoteEvent
+import com.davidglez.mydailynote.ui.main.viewModel.NoteListActivityViewModel
 import com.davidglez.mydailynote.ui.theme.MyDailyNoteTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,7 +28,10 @@ class MainActivity : ComponentActivity() {
                     composable(MainDestination.NoteList.route) {
                         NoteList(onNavigate = { screen ->
                             navigate(navHostController = navController, screenDestination = screen)
-                        }, noteListInteractor = noteViewModel.state.value)
+                        }, noteListInteractor = noteViewModel.state.value, onSelectedNote = {
+                            noteViewModel.onEvent(NoteEvent.SelectedNote(note = it))
+                            navigate(navHostController = navController, screenDestination = MainDestination.UpdateScreen)
+                        })
                     }
                     composable(MainDestination.CreateEditNote.route) {
                         CreateEditNote(onEvent = { event ->
@@ -52,6 +39,14 @@ class MainActivity : ComponentActivity() {
                         }, noteListInteractor = noteViewModel.state.value, onNavigate = {
                             navigate(navHostController = navController, screenDestination = it)
                         })
+                    }
+                    composable(MainDestination.UpdateScreen.route) {
+                        UpdateScreenActivity(
+                            selectedNote =  noteViewModel.state.value.selectedNote ,
+                            onNavigate = { navigate(navHostController = navController, screenDestination = it) },
+                            noteListInteractor = noteViewModel.state.value,
+                            onEvent = { noteViewModel.onEvent(it) }
+                        )
                     }
                 }
                 /*Surface(

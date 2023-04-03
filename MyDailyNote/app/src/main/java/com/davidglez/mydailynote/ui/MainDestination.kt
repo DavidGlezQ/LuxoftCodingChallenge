@@ -6,4 +6,7 @@ package com.davidglez.mydailynote.ui
 sealed class MainDestination(val route: String) {
     object NoteList: MainDestination(route = "NoteList")
     object CreateEditNote: MainDestination(route = "CreateEditNote")
+    object UpdateScreen: MainDestination(route = "UpdateNote")
 }
+
+/* Clase para Navegacion de Compose */

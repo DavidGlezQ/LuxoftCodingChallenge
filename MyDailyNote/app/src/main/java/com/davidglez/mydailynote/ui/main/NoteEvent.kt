@@ -10,4 +10,7 @@ sealed class NoteEvent {
     object NavToHome: NoteEvent()
     object NotNavToHome: NoteEvent()
     data class AddNote(val note: Note): NoteEvent()
+    data class UpdateNote(val note: Note): NoteEvent()
+    data class DeleteNote(val note: Note): NoteEvent()
+    data class SelectedNote(val note: Note): NoteEvent()
 }

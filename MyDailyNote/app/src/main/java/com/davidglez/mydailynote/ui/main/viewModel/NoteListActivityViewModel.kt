@@ -1,4 +1,4 @@
-package com.davidglez.mydailynote.ui.noteList
+package com.davidglez.mydailynote.ui.main.viewModel
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
@@ -11,6 +11,7 @@ import com.davidglez.mydailynote.domain.notes.InsertNote
 import com.davidglez.mydailynote.domain.notes.UpdateNote
 import com.davidglez.mydailynote.domain.notes.model.Note
 import com.davidglez.mydailynote.ui.main.NoteEvent
+import com.davidglez.mydailynote.ui.main.interactor.NoteListInteractor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,13 +38,22 @@ class NoteListActivityViewModel @Inject constructor(
     fun onEvent(noteEvent: NoteEvent) {
         when(noteEvent) {
             is NoteEvent.AddNote -> {
-                insertNote(note = noteEvent.note)
+                onInsertNote(note = noteEvent.note)
             }
             NoteEvent.NavToHome -> {
                 setNavToHome()
             }
             NoteEvent.NotNavToHome -> {
                 unSetNavToHome()
+            }
+            is NoteEvent.DeleteNote -> {
+                onDeleteNote(note = noteEvent.note)
+            }
+            is NoteEvent.UpdateNote -> {
+                onUpdateNote(note = noteEvent.note)
+            }
+            is NoteEvent.SelectedNote -> {
+                onSelectedNote(note = noteEvent.note)
             }
         }
     }
@@ -57,12 +67,32 @@ class NoteListActivityViewModel @Inject constructor(
         }
     }
 
-    private fun insertNote(note: Note) {
+    private fun onInsertNote(note: Note) {
         viewModelScope.launch(Dispatchers.IO) {
             addNote(note)
             collectNotes()
             setNavToHome()
         }
+    }
+
+    private fun onUpdateNote(note: Note) {
+        viewModelScope.launch(Dispatchers.IO) {
+            updateNote(note)
+            collectNotes()
+            setNavToHome()
+        }
+    }
+
+    private fun onDeleteNote(note: Note) {
+        viewModelScope.launch(Dispatchers.IO) {
+            deleteNote(note)
+            collectNotes()
+            setNavToHome()
+        }
+    }
+
+    private fun onSelectedNote(note: Note) {
+        _state.value = _state.value.copy(selectedNote = note)
     }
 
     private fun setNavToHome() { //Navegar a la lista de notas cuando se inserta una nota

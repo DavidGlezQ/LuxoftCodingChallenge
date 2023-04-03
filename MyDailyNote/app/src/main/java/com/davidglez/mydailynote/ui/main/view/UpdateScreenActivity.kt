@@ -1,11 +1,9 @@
-package com.davidglez.mydailynote.ui.noteCreateEdit
+package com.davidglez.mydailynote.ui.main.view
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -13,7 +11,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.text.input.ImeAction
@@ -22,33 +19,34 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.davidglez.mydailynote.ui.components.TfCustom
-import com.davidglez.mydailynote.ui.theme.MyDailyNoteTheme
 import com.davidglez.mydailynote.R
+import com.davidglez.mydailynote.data.notes.model.utils.Constants
 import com.davidglez.mydailynote.domain.notes.model.Note
 import com.davidglez.mydailynote.ui.MainDestination
 import com.davidglez.mydailynote.ui.components.CounterMaxLength
+import com.davidglez.mydailynote.ui.components.TfCustom
 import com.davidglez.mydailynote.ui.main.NoteEvent
-import com.davidglez.mydailynote.ui.noteList.NoteListInteractor
-
+import com.davidglez.mydailynote.ui.main.interactor.NoteListInteractor
+import com.davidglez.mydailynote.ui.theme.MyDailyNoteTheme
 
 /**
- * Created by davidgonzalez on 01/04/23
+ * Created by davidgonzalez on 03/04/23
  */
 
 @Composable
-fun CreateEditNote(onEvent: (NoteEvent) -> Unit,
-                   noteListInteractor: NoteListInteractor,
-                   onNavigate: (MainDestination) -> Unit) {
-
+fun UpdateScreenActivity(
+    selectedNote: Note,
+    onNavigate: (MainDestination) -> Unit,
+    noteListInteractor: NoteListInteractor,
+    onEvent: (noteEvent: NoteEvent) -> Unit) {
     ConstraintLayout {
         val topGuideline = createGuidelineFromTop(16.dp)
 
         val (textFieldNoteName, textFieldNoteDescription,
-            counterNoteDescription ,btnSaveNote) = createRefs()
+            counterNoteDescription, btnSaveNote, btnDeleteNote) = createRefs()
 
-        var noteNameValue by remember { mutableStateOf("") }
-        var notesValue by remember { mutableStateOf("") }
+        var noteNameValue by remember { mutableStateOf( selectedNote.title) }
+        var notesValue by remember { mutableStateOf(selectedNote.description) }
 
         //Validadion para saber si va a la lista de notas y devolver la bandera a su estado
         if (noteListInteractor.navToHome) {
@@ -94,21 +92,39 @@ fun CreateEditNote(onEvent: (NoteEvent) -> Unit,
             currentLength = notesValue.length,
             maxLengthRes = R.integer.notes_max_length)
 
-        //Button
+        //Button Save
         Button(
             onClick = {
-                onEvent(NoteEvent.AddNote(note = Note(
-                    id = 0,
+                onEvent(NoteEvent.UpdateNote(note = Note(
+                    id = selectedNote.id,
                     title = noteNameValue,
                     description = notesValue))) },
             modifier = Modifier.constrainAs(btnSaveNote) {
                 top.linkTo(textFieldNoteDescription.bottom)
             }
-            .padding(all = 16.dp)) {
-            Text(text = "Save Note")
+                .padding(all = 16.dp)) {
+            Text(text = "Update Note")
             Icon(
                 Icons.Filled.Done,
-                contentDescription = "Note Save",
+                contentDescription = "Note Update",
+                modifier = Modifier.size(ButtonDefaults.IconSize))
+        }
+
+        //Button Delete
+        Button(
+            onClick = {
+                onEvent(NoteEvent.DeleteNote(note = Note(
+                    id = selectedNote.id,
+                    title = selectedNote.title,
+                    description = selectedNote.description))) },
+            modifier = Modifier.constrainAs(btnDeleteNote) {
+                top.linkTo(btnSaveNote.bottom)
+            }
+                .padding(all = 16.dp)) {
+            Text(text = "Delete Note")
+            Icon(
+                Icons.Filled.Done,
+                contentDescription = "Note Delete",
                 modifier = Modifier.size(ButtonDefaults.IconSize))
         }
     }
@@ -116,9 +132,9 @@ fun CreateEditNote(onEvent: (NoteEvent) -> Unit,
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun PreviewScreen() {
+fun PreviewUpdateScreen() {
     MyDailyNoteTheme {
-        CreateEditNote(onEvent = {},
+        UpdateScreenActivity(selectedNote = Constants.example_note, onEvent = {},
             noteListInteractor = NoteListInteractor(),
             onNavigate = {})
     }

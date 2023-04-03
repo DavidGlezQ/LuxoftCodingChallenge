@@ -1,4 +1,4 @@
-package com.davidglez.mydailynote.ui.noteList
+package com.davidglez.mydailynote.ui.main.interactor
 
 import com.davidglez.mydailynote.domain.notes.model.Note
 
@@ -8,5 +8,6 @@ import com.davidglez.mydailynote.domain.notes.model.Note
  */
 data class NoteListInteractor(
     var notes: List<Note> = emptyList(),
-    var navToHome: Boolean = false // Variable para saber si navegamos a la lista de notas
+    var navToHome: Boolean = false, // Variable para saber si navegamos a la lista de notas
+    var selectedNote: Note = Note()
 )

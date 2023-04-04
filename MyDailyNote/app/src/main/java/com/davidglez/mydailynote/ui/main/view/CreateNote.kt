@@ -26,7 +26,6 @@ import com.davidglez.mydailynote.ui.components.CounterMaxLength
 import com.davidglez.mydailynote.ui.main.NoteEvent
 import com.davidglez.mydailynote.ui.main.interactor.NoteListInteractor
 
-
 /**
  * Created by davidgonzalez on 01/04/23
  */

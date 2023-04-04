@@ -9,6 +9,7 @@ import javax.inject.Inject
  */
 class NotesRepository @Inject constructor(private val noteDao: NoteDao){
 
+    //Note CRUD
     fun getAllNotes(): List<NoteEntity> {
         return noteDao.getAll()
     }

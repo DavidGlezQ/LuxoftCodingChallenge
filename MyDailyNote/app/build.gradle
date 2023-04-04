@@ -51,7 +51,6 @@ android {
 dependencies {
     implementation 'androidx.wear.compose:compose-material3:+'
 
-
     //Room
     def room_version = "2.5.1"
     implementation("androidx.room:room-runtime:$room_version")

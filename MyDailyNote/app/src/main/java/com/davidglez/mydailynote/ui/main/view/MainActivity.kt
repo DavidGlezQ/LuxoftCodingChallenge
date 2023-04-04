@@ -58,11 +58,6 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                 }
-                /*Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background) {
-                    LottieAnimationView()
-                }*/
             }
         }
     }
@@ -76,17 +71,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-/*@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun LottieAnimationView() {
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.my_daily_note_splash_animation))
-    val progress by animateLottieCompositionAsState(composition)
-    LottieAnimation(
-        composition = composition,
-        progress = { progress },
-    )
-}*/
 
 
 

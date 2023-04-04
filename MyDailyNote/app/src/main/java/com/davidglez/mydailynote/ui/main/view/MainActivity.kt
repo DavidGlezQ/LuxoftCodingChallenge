@@ -3,6 +3,7 @@ package com.davidglez.mydailynote.ui.main.view
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -14,6 +15,7 @@ import com.davidglez.mydailynote.ui.main.NoteEvent
 import com.davidglez.mydailynote.ui.main.viewModel.NoteListActivityViewModel
 import com.davidglez.mydailynote.ui.theme.MyDailyNoteTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -23,7 +25,15 @@ class MainActivity : ComponentActivity() {
             MyDailyNoteTheme {
                 val noteViewModel: NoteListActivityViewModel = hiltViewModel()
                 val navController = rememberNavController()
-                NavHost(navController = navController, startDestination = MainDestination.NoteList.route) {
+                NavHost(navController = navController, startDestination = MainDestination.SplashScreen.route) {
+                    composable(MainDestination.SplashScreen.route) {
+                        Splash()
+                        LaunchedEffect(key1 = true) {
+                            delay(3500)
+                            navController.popBackStack() //limpiar stack
+                            navController.navigate(MainDestination.NoteList.route)
+                        }
+                    }
                     composable(MainDestination.NoteList.route) {
                         NoteList(onNavigate = { screen ->
                             navigate(navHostController = navController, screenDestination = screen)

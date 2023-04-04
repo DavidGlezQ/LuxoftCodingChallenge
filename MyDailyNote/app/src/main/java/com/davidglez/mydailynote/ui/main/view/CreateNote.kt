@@ -88,7 +88,7 @@ fun CreateEditNote(onEvent: (NoteEvent) -> Unit,
             currentLength = notesValue.length,
             maxLengthRes = R.integer.notes_max_length)
 
-        //Button
+        //Button create note
         Button(
             onClick = {
                 onEvent(NoteEvent.AddNote(note = Note(

@@ -7,6 +7,7 @@ sealed class MainDestination(val route: String) {
     object NoteList: MainDestination(route = "NoteList")
     object CreateEditNote: MainDestination(route = "CreateEditNote")
     object UpdateScreen: MainDestination(route = "UpdateNote")
+    object SplashScreen: MainDestination(route = "SplashScreen")
 }
 
 /* Clase para Navegacion de Compose */

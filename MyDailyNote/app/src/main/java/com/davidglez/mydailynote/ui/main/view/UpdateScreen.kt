@@ -76,7 +76,7 @@ fun UpdateScreenActivity(
                 notesValue = it
             },
             label = { Text(text = stringResource(id = R.string.hint_textField_note_description)) },
-            singleLine = true
+            singleLine = false
         )
 
         //Counter Note Description

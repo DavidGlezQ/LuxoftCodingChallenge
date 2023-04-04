@@ -1,8 +1,6 @@
 package com.davidglez.mydailynote.ui.main.view
 
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
@@ -36,7 +34,7 @@ fun UpdateScreenActivity(
         val topGuideline = createGuidelineFromTop(16.dp)
 
         val (textFieldNoteName, textFieldNoteDescription,
-            counterNoteDescription, btnSaveNote, btnDeleteNote) = createRefs()
+            counterNoteDescription, btnSaveNote, btnDeleteNote, btnColum) = createRefs()
 
         var noteNameValue by remember { mutableStateOf(selectedNote.title) }
         var notesValue by remember { mutableStateOf(selectedNote.description) }
@@ -89,43 +87,43 @@ fun UpdateScreenActivity(
             currentLength = notesValue.length,
             maxLengthRes = R.integer.notes_max_length)
 
-        //Button Save
-        Button(
-            onClick = {
-                onEvent(NoteEvent.UpdateNote(note = Note(
-                    id = selectedNote.id,
-                    title = noteNameValue,
-                    description = notesValue))) },
-            modifier = Modifier
-                .constrainAs(btnSaveNote) {
-                    top.linkTo(textFieldNoteDescription.bottom)
-                }
-                .padding(top = 16.dp, start = 16.dp)) {
-            Text(text = stringResource(id = R.string.btn_updateNote_text))
-            Icon(
-                Icons.Filled.Done,
-                contentDescription = stringResource(id = R.string.btn_updateNote_text),
-                modifier = Modifier.size(ButtonDefaults.IconSize))
+        Row(modifier = Modifier.fillMaxWidth().constrainAs(btnColum) {
+            top.linkTo(counterNoteDescription.bottom)
+        }) {
+            //Button Save
+            Button(
+                onClick = {
+                    onEvent(NoteEvent.UpdateNote(note = Note(
+                        id = selectedNote.id,
+                        title = noteNameValue,
+                        description = notesValue))) },
+                modifier = Modifier
+                    .padding(top = 16.dp, start = 16.dp)) {
+                Text(text = stringResource(id = R.string.btn_updateNote_text))
+                Icon(
+                    Icons.Filled.Done,
+                    contentDescription = stringResource(id = R.string.btn_updateNote_text),
+                    modifier = Modifier.size(ButtonDefaults.IconSize))
+            }
+
+            //Button Delete
+            Button(
+                onClick = {
+                    onEvent(NoteEvent.DeleteNote(note = Note(
+                        id = selectedNote.id,
+                        title = selectedNote.title,
+                        description = selectedNote.description))) },
+                modifier = Modifier
+
+                    .padding(top = 16.dp, start = 16.dp)) {
+                Text(text = stringResource(id = R.string.btn_deleteNote_text))
+                Icon(
+                    Icons.Filled.Delete,
+                    contentDescription = stringResource(id = R.string.btn_deleteNote_text),
+                    modifier = Modifier.size(ButtonDefaults.IconSize))
+            }
         }
 
-        //Button Delete
-        Button(
-            onClick = {
-                onEvent(NoteEvent.DeleteNote(note = Note(
-                    id = selectedNote.id,
-                    title = selectedNote.title,
-                    description = selectedNote.description))) },
-            modifier = Modifier
-                .constrainAs(btnDeleteNote) {
-                    top.linkTo(btnSaveNote.bottom)
-                }
-                .padding(top = 8.dp, start = 16.dp)) {
-            Text(text = stringResource(id = R.string.btn_deleteNote_text))
-            Icon(
-                Icons.Filled.Delete,
-                contentDescription = stringResource(id = R.string.btn_deleteNote_text),
-                modifier = Modifier.size(ButtonDefaults.IconSize))
-        }
     }
 }
 

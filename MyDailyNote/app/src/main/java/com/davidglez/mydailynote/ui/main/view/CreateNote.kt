@@ -49,6 +49,7 @@ fun CreateEditNote(onEvent: (NoteEvent) -> Unit,
             onNavigate(MainDestination.NoteList)
             onEvent(NoteEvent.NotNavToHome)
         }
+
         //TextField Note Name
         TfCustom(paddingTop = dimensionResource(id = R.dimen.common_padding_nano),
             labelRes = R.string.hint_textField_note_name,
